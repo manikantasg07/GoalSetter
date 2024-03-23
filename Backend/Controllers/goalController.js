@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Goal = require("../model/goalModel");
 
 const getGoals = asyncHandler(async(req,res)=>{
-    const goals = await Goal.find({});
+    const goals = await Goal.find({user:req.user._id});
 
     res.status(200).json({
         goals
@@ -14,7 +14,7 @@ const setGoal = asyncHandler(async(req,res)=>{
         res.status(400)
         throw new Error("Text field Required")
     }
-    const goal= await Goal.create({text : req.body.text})
+    const goal= await Goal.create({user : req.user._id,text : req.body.text})
     res.status(200).json({
         goal
     })
@@ -25,6 +25,10 @@ const updateGoal = asyncHandler(async(req,res)=>{
     if(!goal){
         res.status(400);
         throw new Error("Goal not found");
+    }
+    if(goal.user.toString()!=req.user._id){
+        res.status(401);
+        throw new Error("User not authorized")
     }
     const updatedGoal = await Goal.findByIdAndUpdate(req.params.id,req.body,{
         new:true
@@ -39,6 +43,10 @@ const deleteGoal = asyncHandler(async(req,res)=>{
     if(!goal){
         res.status(400)
         throw new Error("Goal Not found");
+    }
+    if(goal.user.toString()!=req.user._id){
+        res.status(401);
+        throw new Error("User not authorized")
     }
     const deletedGoal = await Goal.findByIdAndDelete(req.params.id)
     res.status(200).json({
