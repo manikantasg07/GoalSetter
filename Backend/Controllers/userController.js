@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/userMode");
 const saltRounds = 10;
 const jwtPassword = process.env.JWT_PASSWORD
+const nodemailer = require("nodemailer");
 
 const registerUser = asyncHandler(async(req,res)=>{
     const {name , email,password} = req.body;
@@ -59,6 +60,7 @@ const getMe = asyncHandler(async(req,res)=>{
     res.status(200).json({
     })
 })
+
 
 const generateToken = (id)=>{
     const token = jwt.sign({id},jwtPassword,{

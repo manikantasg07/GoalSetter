@@ -7,7 +7,7 @@
     "start": "node Backend/server.js",
     "server": "nodemon Backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev" : "concurrently \"npm run server\" \"npm run client\" "
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "author": "Manikanta Sarma Ganti",
   "license": "ISC",
@@ -18,7 +18,8 @@
     "express": "^4.19.1",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.2.3"
+    "mongoose": "^8.2.3",
+    "nodemailer": "^6.9.13"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

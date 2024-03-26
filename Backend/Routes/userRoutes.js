@@ -10,6 +10,8 @@ router.post("/login",loginUser);
 
 router.get("/me",protect,getMe);
 
+router.post("/verifyEmail")
+
 
 
 
