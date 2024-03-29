@@ -30,6 +30,10 @@ const updateGoal = asyncHandler(async(req,res)=>{
         res.status(401);
         throw new Error("User not authorized")
     }
+    if(!req.body.text){
+        res.status(400);
+        throw new Error("Text is required");
+    }
     const updatedGoal = await Goal.findByIdAndUpdate(req.params.id,req.body,{
         new:true
     })

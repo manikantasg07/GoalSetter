@@ -62,6 +62,9 @@ function Login() {
             <button type="submit" className="btn btn-block">submit</button>
           </div>
         </form>
+        <button  className="btn btn-block" onClick={function(){
+            navigate("/forgotpassword")
+          }}>Forgot Password</button>
     </section>
   </>
   )

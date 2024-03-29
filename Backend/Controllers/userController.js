@@ -56,6 +56,26 @@ const loginUser = asyncHandler(async(req,res)=>{
     }
 })
 
+const changePassword = asyncHandler(async(req,res)=>{
+    const {email,password,confirmPassword} = req.body;
+    if(!password || !confirmPassword || password!=confirmPassword){
+        res.status(400)
+        throw new Error("Incorrect Passwords");
+    }
+    const user = await User.findOne({email});
+    bcryptjs.hash(password,saltRounds,async(err,result)=>{
+        if(err){
+            res.status(400)
+            throw new Error(err)
+        }
+        user.password=result;
+        // console.log(user);
+        const updatedUser = await User.findOneAndUpdate({email},user,{new:true})
+        // console.log(updatedUser);
+        res.status(200).json(updatedUser)
+    })
+})
+
 const getMe = asyncHandler(async(req,res)=>{
     res.status(200).json({
     })
@@ -73,4 +93,5 @@ module.exports = {
     registerUser,
     loginUser,
     getMe,
+    changePassword
 }
